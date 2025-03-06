@@ -12,6 +12,7 @@ Maybe hashing could help organize this
 ...but you should definitely expect worst case from any sorting algorithm you might use.
 
 Notes: Need to check channels and see what myo_ecn is looking for. Need to check feature extraction as well.
+       Need to optimize this. Optimize sorting and how the info is being stored into the CSV.
 """
 
 
