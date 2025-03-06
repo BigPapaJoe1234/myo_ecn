@@ -1,6 +1,8 @@
 import numpy as np
 import numpy.matlib as npm
 from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
 
 class FeatureExtractor():
     def __init__(self, winlen=50, overlap=25):
@@ -51,7 +53,11 @@ class ClassificationModel:
         feature_matrix = self.fit_reduce_dimensionality(feature_matrix, retained_variance)
         
         if classifier is None:
-            self.classifier = svm.SVC(gamma='auto', C=10)
+            self.classifier = RandomForestClassifier(n_estimators=100, criterion='gini', max_depth=None, min_samples_split=2,
+                                                     min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='sqrt',
+                                                     max_leaf_nodes=None, min_impurity_decrease=0.0, bootstrap=True, oob_score=False,
+                                                     n_jobs=None, random_state=None, verbose=0, warm_start=False, class_weight=None,
+                                                     ccp_alpha=0.0, max_samples=None, monotonic_cst=None)
         else:
             self.classifier = classifier
         
@@ -62,7 +68,7 @@ class ClassificationModel:
         labels_res = self.classifier.predict(feature_matrix)
 
         # Calculate and report the confusion matrix on the training set:
-        conf_mat = np.zeros((max(labels)+1, max(labels)+1), dtype=np.int)
+        conf_mat = np.zeros((max(labels)+1, max(labels)+1), dtype=np.int64)
         for i in range(len(labels)):
             conf_mat[labels[i], labels_res[i]] += 1
         print('Confusion matrix on training set:\n', conf_mat)

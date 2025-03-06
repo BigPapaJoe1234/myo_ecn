@@ -5,7 +5,7 @@ from EMG_Classification import FeatureExtractor, ClassificationModel
 
 def main():
     # Parce command line inputs, if any
-    data_folder = 'data'
+    data_folder = 'C:\\Users\\scott\\OneDrive\\Documents\\GitHub\\myo_ecn\\examples\\classification\\data'
     output_file = 'models/trained_model'
     if len(sys.argv) > 1:
         data_folder = sys.argv[1]
@@ -19,7 +19,7 @@ def main():
 
     # Define feature matrix and label vector:
     n_features = len(extractor.features)
-    n_channels = 8;
+    n_channels = 8
     feature_matrix  = np.zeros((0, n_features * n_channels))
     labels = []
 
@@ -38,7 +38,7 @@ def main():
         trials = sorted([t for t in os.listdir() if os.path.isfile(t)])
         for trial in trials:
             # ... load EMG data from the .csv file ...
-            emg = np.loadtxt(trial, delimiter=', ')
+            emg = np.loadtxt(trial, delimiter=',')
             # ... extract features and concatenate to the feature matrix ...
             to_add = extractor.extract_feature_matrix(emg)
             feature_matrix  = np.vstack((feature_matrix, to_add))
