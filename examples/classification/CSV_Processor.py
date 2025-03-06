@@ -1,4 +1,4 @@
-'''
+"""
 Author: Logan Bellamy
 Date: 03/06/2025
 
@@ -6,12 +6,16 @@ Warning: If you are using GitHub for version control DO NOT push the input file.
          DO NOT push up the output files either. They are also too big. Very inconvenient. Working on a solution.
 
 This is a super inefficient CSV sorting algorithm.
+This was created specifically to handle the BCICIV competition files in CSV format.
 There is probably a package that could be used to speed this up.
 Maybe hashing could help organize this
 ...but you should definitely expect worst case from any sorting algorithm you might use.
+"""
+
 
 '''
-
+Setup
+'''
 # Imports
 import csv
 import os
@@ -24,7 +28,10 @@ start_time = time.time()
 expected_gesture = ["tongue", "foot", "right", "left"]
 
 
-# Creates directories and CSV file (based on expected format)
+'''
+Function Creation
+'''
+# Creates directories and CSV files (based on expected format)
 def datahandler(i, gesture, row_info):
     base_dir = "Output_Data"
 
@@ -35,7 +42,7 @@ def datahandler(i, gesture, row_info):
     if not os.path.exists(gesture_dir):
         os.makedirs(gesture_dir)
 
-    # Full path for the patient directory (i-based directory)
+    # Full path for the patient directory
     patient_dir = os.path.join(gesture_dir, f"Patient_{i}")
 
     # Check if the patient directory exists, if so, raise an error
@@ -53,19 +60,21 @@ def datahandler(i, gesture, row_info):
         csvfile.write(', '.join(map(str, list(row_info))) + '\n')
 
 
+'''
+Main
+'''
 # Open the CSV file for reading
 with open("C:\\Users\\scott\\OneDrive\\Documents\\GitHub\\myo_ecn\\examples\\classification\\Input_Data\\BCICIV_2a_all_patients.csv",
           'r') as file:
 
     # Set up readers
     csvreader = csv.reader(file)
-    fields = next(csvreader)
+    fields = next(csvreader) # Skips header row (can be used if you need to see the header)
 
-    # This is an insanely inefficient loop that extracts important data (I am sorry)
     # Go through the patient numbers
     for i in range(1,10):
 
-        # Convert it to string for checking
+        # Convert i to string for checking
         str_num = str(i)
 
         # Go through the gestures
@@ -97,6 +106,6 @@ with open("C:\\Users\\scott\\OneDrive\\Documents\\GitHub\\myo_ecn\\examples\\cla
             else:
                 print(f"No {x} data found for patient {i}")
 
-    # Notify
+    # Notify completion and show execution time
     total_time = time.time() - start_time
     print(f"CSV file has been sorted. Please see Output_Data. Total time: {total_time:.4f} seconds.")
