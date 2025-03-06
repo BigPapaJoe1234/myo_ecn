@@ -10,6 +10,8 @@ This was created specifically to handle the BCICIV competition files in CSV form
 There is probably a package that could be used to speed this up.
 Maybe hashing could help organize this
 ...but you should definitely expect worst case from any sorting algorithm you might use.
+
+Notes: Need to check channels and see what myo_ecn is looking for. Need to check feature extraction as well.
 """
 
 
